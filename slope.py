@@ -5,8 +5,8 @@ import math
 
 class Circle:
     def __init__(self,c,r):
-        self.c = np.asarray(c)
-        self.r = r
+        self.c = np.asarray(c)#圆心
+        self.r = r#半径
         self.region = Point(c).buffer(r)
         self.outline = self.region.boundary
         self.points = np.array(self.outline.coords)
