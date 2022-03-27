@@ -5,7 +5,7 @@ import math
 
 class Circle:
     def __init__(self,c,r):
-        self.c = np.asarray(c)#圆心
+        self.c = np.asarray(c)#圆心 np.array（默认情况下）将会copy该对象，而 np.asarray除非必要，否则不会copy该对象。
         self.r = r#半径
         self.region = Point(c).buffer(r)
         self.outline = self.region.boundary
@@ -15,7 +15,7 @@ class Circle:
 class Slope:
 
     def __init__(self,points):
-        points = clock_wise_points(points)
+        points = clock_wise_points(points)#FIXME ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the '.coords' to a numpy array instead.
         self.region = Polygon(points)
         self.outline = self.region.boundary
         self.points = np.asarray(self.outline.coords)
@@ -137,7 +137,7 @@ class Slope:
                 ranger = np.linspace(rmin,rmax,nr)
                 for r in ranger:
                     slip = Circle((cx,cy),r)
-                    flag = self.cut(slip)
+                    flag = self.cut(slip)#FIXME ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the '.coords' to a numpy array instead.
                     if flag:
                         fos = self.calc_fos()
                         if fos < self.minfos:
@@ -155,9 +155,9 @@ class Slope:
         if slip is None:
             slip = self.minslip
             self.fos = self.minfos
-            flag = self.cut(slip)
+            flag = self.cut(slip)#FIXME
 
-        flag = self.cut(slip)
+        flag = self.cut(slip)#FIXME
         if flag:
             self.calc_fos()
             c = slip.c
@@ -196,7 +196,7 @@ def clock_wise_points(points):
 if __name__ == "__main__":
     points = [[0,0],[0,5.],[4,5],[6,7],[8,8],[10,10],[15,0],[15,10]]
     c = Circle((6,12),7)
-    s = Slope(points)
+    s = Slope( points)
     s.set_soil_prop(20,10,19)
     s.solve([2,12,5,14])
     s.show()
